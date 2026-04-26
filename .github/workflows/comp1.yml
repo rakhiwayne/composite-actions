@@ -15,7 +15,7 @@ jobs:
   first_job:
     runs-on: ubuntu-latest
     outputs:
-      first_job_output: ${{steps.build.output.status}}
+      first_job_output: ${{steps.build.outputs.status}}
       
     steps:
       - name: checkout-repo
@@ -36,7 +36,7 @@ jobs:
       - name: greetings
         run: echo 'I see you've recived the hello, glad to meet you
       - name: o/p from first_job
-        run: echo the build status is $needs.first_job.outputs.status
+        run: echo the build status is ${{needs.first_job.outputs.first_job_output}}
   failure:
     needs: first_job
     if : failure()
