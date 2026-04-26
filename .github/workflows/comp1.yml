@@ -7,8 +7,8 @@ jobs:
   first_job:
     runs-on: ubuntu-latest
     steps:
-      - name: checkout-repo
-        uses: actions/checkout@v4
+    #   - name: checkout-repo
+    #     uses: actions/checkout@v4
       - name: my composite action
         uses: ./.github/actions/composite-cache-deps
         with:
@@ -19,3 +19,10 @@ jobs:
     steps:
       - name: greetings
         run: echo 'I see you've recived the hello, glad to meet you
+  failure:
+    needs: first_job
+    if : failure()
+    runs-on: ubuntu-latest
+    steps:
+      - name: composite actions has failed
+        run: echo 'please see that the first job failed which is having the composite action to be loading from same repo actions folder'   
