@@ -25,21 +25,21 @@ jobs:
         with:
           your-name: 'Rakesh Gorre'
       - name: output-test
-        run: echo '$GITHUB_OUTPUT'
+        run: echo "$GITHUB_OUTPUT"
       - name: Build
         id: build
-        run: echo 'status = ${{inputs.build_status}}' >> $GITHUB_OUTPUT
+        run: echo 'status=${{inputs.build_status}}' >> $GITHUB_OUTPUT
   second-job:
     needs: first_job
     runs-on: ubuntu-latest
     steps:
       - name: greetings
-        run: echo 'I see you've recived the hello, glad to meet you
+        run: echo "I see you've recived the hello, glad to meet you"
       - name: o/p from first_job
         run: echo the build status is ${{needs.first_job.outputs.first_job_output}}
   failure:
     needs: first_job
-    if : failure()
+    if: failure()
     runs-on: ubuntu-latest
     steps:
       - name: composite actions has failed
