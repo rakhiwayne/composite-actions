@@ -28,7 +28,7 @@ jobs:
         run: echo '$GITHUB_OUTPUT'
       - name: Build
         id: build
-        run: echo 'status = inputs.build_status' >> $GITHUB_OUTPUT
+        run: echo 'status = ${{inputs.build_status}}' >> $GITHUB_OUTPUT
   second-job:
     needs: first_job
     runs-on: ubuntu-latest
