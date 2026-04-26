@@ -2,23 +2,41 @@ name: first composite action to test
 
 on: 
   workflow_dispatch:
+    inputs:
+      build_status:
+        description: 'Please select the build status'
+        type: choice
+        required: true
+        options:
+          - success
+          - failure
 
 jobs:
   first_job:
     runs-on: ubuntu-latest
+    outputs:
+      first_job_output: ${{steps.build.output.status}}
+      
     steps:
-    #   - name: checkout-repo
-    #     uses: actions/checkout@v4
+      - name: checkout-repo
+        uses: actions/checkout@v4
       - name: my composite action
         uses: ./.github/actions/composite-cache-deps
         with:
           your-name: 'Rakesh Gorre'
+      - name: output-test
+        run: echo '$GITHUB_OUTPUT'
+      - name: Build
+        id: build
+        run: echo 'status = inputs.build_status' >> $GITHUB_OUTPUT
   second-job:
     needs: first_job
     runs-on: ubuntu-latest
     steps:
       - name: greetings
         run: echo 'I see you've recived the hello, glad to meet you
+      - name: o/p from first_job
+        run: echo the build status is $needs.first_job.outputs.status
   failure:
     needs: first_job
     if : failure()
