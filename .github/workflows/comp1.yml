@@ -13,4 +13,9 @@ jobs:
         uses: ./.github/actions/composite-cache-deps
         with:
           your-name: 'Rakesh Gorre'
-
+  second-job:
+    needs: first_job
+    runs-on: ubuntu-latest
+    steps:
+      - name: greetings
+        run: echo 'I see you've recived the hello, glad to meet you
